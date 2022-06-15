@@ -28,10 +28,17 @@ int main(int argc, char * argv[])
     // get count of sectors
     int nsec = iniparser_getnsec(ini);
 
+    // array of sector names
+    char* sectors[nsec];
+
+    for (int i = 0; i < nsec; i++) {
+        sectors[i] = iniparser_getsecname(ini,i);
+    }
+
     // go through each sector
     for (int i = 0; i < nsec; ++i) {
         // get name of sector and print
-        const char *sector = iniparser_getsecname(ini,i);
+        const char *sector = sectors[i];
         printf("%s\n",sector);
 
         // get number of keys
@@ -42,9 +49,9 @@ int main(int argc, char * argv[])
         iniparser_getseckeys(ini,sector,keys);
 
         // go through each key
-        for (int i = 0; i < nkeys; ++i) {
+        for (int j = 0; j < nkeys; ++j) {
             // print key and value
-            printf("%s=%s\n", keys[i],iniparser_getstring(ini,keys[i],""));
+            printf("%s=%s\n", keys[j],iniparser_getstring(ini,keys[j],""));
         }
         printf("--------------------\n");
     }
